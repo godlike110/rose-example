@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<title>搜狐购房助手客户端下载</title>
+<link rel="stylesheet" href="http://a1.itc.cn/sceapp/fws/other/css/demo2.css">
+<style>
+*{
+	-webkit-user-select:auto;
+	-webkit-tap-highlight-color:rgba(255,0,0,0);
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="clearfix">
+        <a class="logo" href="#"><img src="http://a1.itc.cn/sceapp/fws/other/img/logo.png" alt=""></a>
+        <hgroup>
+            <h1>搜狐购房助手</h1>
+            <h2>为您找到理想的家</h2>
+        </hgroup>
+    </header>
+    <div class="content">
+        <h3>请根据您的设备选择下载</h3>
+        <div id="btn01" class="btn btn01" data-href="https://itunes.apple.com/cn/app/id592992070?mt=8">iPhone版下载</div>
+        <div id="btn02" class="btn btn02" data-href="http://a1.itc.cn/sceapp/mobile_app_release/FocusApartment.apk">Android版下载</div>
+    </div>
+    <footer>
+        <p>Copyright &copy; 2013 Sohu.com Inc. All Rights Reserved.</p>
+        <p>北京搜狐新媒体信息技术有限公司</p>
+    </footer>
+</div>
+</body>
+
+<script>
+    var WINDOW = window,
+	DOCUMENT = document,
+	hasTouch = 'ontouchstart' in WINDOW || window.DocumentTouch, // hasTouch = 'ontouchstart' in WINDOW, // 手机上 true
+	RESIZE_EV = 'onorientationchange' in WINDOW ? 'orientationchange' : 'resize',
+	START_EV = hasTouch ? 'touchstart' : 'mousedown',
+	MOVE_EV = hasTouch ? 'touchmove' : 'mousemove',
+	END_EV = hasTouch ? 'touchend' : 'mouseup',
+	NAVIGATOR = navigator,
+	isAndroid = (/android|HTC_Sensation/gi).test(navigator.userAgent),
+	isIPhone=(/(iPhone|iPod|iPad)/i.test(navigator.appVersion));
+	function getById(id){
+		return document.getElementById(id);
+	}
+	var btn01 = getById("btn01"),
+		btn02 = getById("btn02");
+		
+	btn01.addEventListener( START_EV,function(ev){
+		// alert( this.className );
+		this.className = "btn btn01 btn01_hover";
+	},false);
+	
+	btn02.addEventListener( START_EV,function(ev){
+		this.className = "btn btn02 btn02_hover";
+	},false);
+	
+	btn01.addEventListener( END_EV,function(ev){
+		var _this = this;
+		var timer = setTimeout(function() {
+			_this.className = "btn btn01";
+			window.location.href = _this.getAttribute("data-href");
+			clearTimeout( timer );
+		},400);
+		ev.preventDefault();
+	},false);
+		
+	btn02.addEventListener( END_EV,function(ev){
+		var _this = this;
+		var timer = setTimeout(function() {
+			_this.className = "btn btn02";
+			window.location.href = _this.getAttribute("data-href");
+			clearTimeout( timer );
+		},400);
+		ev.preventDefault();
+	},false);
+	
+</script>
+</html>

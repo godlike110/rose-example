@@ -1,0 +1,32 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <task:annotation-driven/>
+
+   <bean id="loadNewsJob"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="newsService" />
+        <property name="targetMethod" value="starReloadNewsData"/>
+    </bean>
+
+    <bean id="loadNewsTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+        <property name="jobDetail" ref="loadNewsJob" />
+        <!--<property name="repeatInterval" value="10000" />-->
+        <property name="repeatCount" value="0" />
+    </bean>
+
+    <!-- 配置在系统启动10秒后，通过PHP接口加载新闻信息到缓存中 -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="startupDelay" value="10"/>
+        <property name="triggers">
+            <list>
+                <ref local="loadNewsTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>
